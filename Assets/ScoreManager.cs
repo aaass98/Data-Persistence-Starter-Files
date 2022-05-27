@@ -8,6 +8,7 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager Instance;
     public int highScore=0;
     public string playerName = "";
+    public string currentPlayer = "";
 
     private void Awake()
     {
@@ -18,6 +19,7 @@ public class ScoreManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(this);
+        LoadGame();
     }
 
     [System.Serializable]
@@ -34,18 +36,19 @@ public class ScoreManager : MonoBehaviour
         data.playerName = playerName;
 
         string json = JsonUtility.ToJson(data);
-
-        File.WriteAllText(Application.persistentDataPath+"/Savefile.json", json);
+        Debug.Log(json);
+        File.WriteAllText(Application.persistentDataPath + "/Savefile.json", json);
     }
 
     public void LoadGame()
     {
         SaveData data = new SaveData();
         string path = Application.persistentDataPath+"/Savefile.json";
-
+        Debug.Log(path);
         if (File.Exists(path))
         {
-            data = JsonUtility.FromJson<SaveData> (path);
+            string json = File.ReadAllText(path);
+            data = JsonUtility.FromJson<SaveData>(json);
         }
         else
         {
@@ -53,6 +56,7 @@ public class ScoreManager : MonoBehaviour
             data.playerName = "";
         }
 
-
+        highScore = data.highScore;
+        playerName = data.playerName;
     }
 }

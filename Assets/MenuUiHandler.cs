@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class MenuUiHandler : MonoBehaviour
 {
     [SerializeField] private Text ScoreText;
+    [SerializeField] private InputField nameInputField;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,7 @@ public class MenuUiHandler : MonoBehaviour
 
     public void StartGame()
     {
+        ScoreManager.Instance.currentPlayer = nameInputField.text;
         SceneManager.LoadScene(1);
     }
 }

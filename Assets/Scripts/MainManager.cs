@@ -89,12 +89,14 @@ public class MainManager : MonoBehaviour
         {
             newHighScore();
         }
+
+        ScoreManager.Instance.SaveGame();
     }
 
     private void newHighScore()
     {
         ScoreManager.Instance.highScore = m_Points;
-        //require name input
+        ScoreManager.Instance.playerName = ScoreManager.Instance.currentPlayer;
         HighScoreText.text = "High Score: " + ScoreManager.Instance.highScore + " (" + ScoreManager.Instance.playerName + ")";
     }
 
